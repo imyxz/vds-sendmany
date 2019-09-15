@@ -6,24 +6,31 @@
   "private": true,
   "main": "main.js",
   "build": {
-    "appId": "",
+    "appId": "vds-sendmany",
     "directories": {
       "buildResources": "static"
     }
   },
   "scripts": {
     "dev": "cross-env NODE_ENV=DEV electron .",
-    "build": "nuxt build && electron-builder"
+    "build": "nuxt build && electron-builder",
+    "rebuild-module": "./node_modules/.bin/electron-rebuild"
   },
   "dependencies": {
-    "nuxt": "^1.4.0"
+    "bitcoin-core": "^2.2.0",
+    "element-ui": "^2.12.0",
+    "nedb": "^1.8.0",
+    "node-sass": "^4.12.0",
+    "nuxt": "^1.4.0",
+    "sass-loader": "^8.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",
     "cross-env": "^5.1.4",
     "electron": "2.0.0-beta.7",
-    "electron-builder": "^20.8.1",
+    "electron-builder": "^21.2.0",
     "electron-devtools-installer": "^2.2.3",
+    "electron-rebuild": "^1.8.6",
     "eslint": "^4.15.0",
     "eslint-friendly-formatter": "^3.0.0",
     "eslint-loader": "^1.7.1",

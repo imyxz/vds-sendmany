@@ -28,6 +28,9 @@ let win = null // Current window
 const electron = require('electron')
 const path = require('path')
 const app = electron.app
+const data = require('./electron/data')
+const vdsrpc = require('./electron/vdsrpc')
+
 const newWin = () => {
 	win = new electron.BrowserWindow({
 		icon: path.join(__dirname, 'static/icon.png')

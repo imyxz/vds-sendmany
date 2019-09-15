@@ -3,6 +3,7 @@ module.exports = {
 	head: {title: 'vds-sendmany'}, // Headers of the page
 	loading: false, // Disable default loading bar
 	build: {
+		transpile: [/^element-ui/],
 		extend (config, { isDev, isClient }) {
 			if (isDev && isClient) {
 				// Run ESLint on save
@@ -19,6 +20,10 @@ module.exports = {
 	},
 	dev: process.env.NODE_ENV === 'DEV',
 	css: [
-		'@/assets/css/global.css'
-	]
+		'@/assets/css/global.css',
+		'element-ui/lib/theme-chalk/index.css'
+	],
+	plugins: [
+    '@/plugins/element-ui',
+  ],
 }
