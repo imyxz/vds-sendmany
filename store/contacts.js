@@ -3,16 +3,27 @@ const events = {}
 let eventId = 0
 function resolveEvent(id, data){
   if(events[id]){
-    events[id](data)
+    events[id].resolve(data)
     delete events[id]
   }
 }
-function registerEvent(func){
-  events[eventId] = func
+function rejectEvent(id, data){
+  if(events[id]){
+    events[id].reject(data)
+    delete events[id]
+  }
+}
+function registerEvent(resolve,reject){
+  events[eventId] = {
+    resolve,reject
+  }
   return eventId++
 }
-ipcRenderer.on('contract-reply', (event, {id, data}) => {
+ipcRenderer.on('contract-reply-success', (event, {id, data}) => {
   resolveEvent(id, data)
+})
+ipcRenderer.on('contract-reply-error', (event, {id, data}) => {
+  rejectEvent(id, data)
 })
 export const state = () => {
   return {
@@ -36,6 +47,8 @@ export const actions = {
       let id = registerEvent((docs) => {
         context.commit('update', docs)
         resolve(docs)
+      }, (data) => {
+        reject(data)
       })
       ipcRenderer.send('load-contacts', {id})
     })
@@ -51,8 +64,31 @@ export const actions = {
       let id = registerEvent((docs) => {
         context.commit('update', docs)
         resolve(docs)
+      }, (data) => {
+        reject(data)
       })
       ipcRenderer.send('save-contacts', {id, data: context.state.contracts})
+    })
+  },
+  async loadFromJson(context, payload){
+    return new Promise((resolve, reject) => {
+      let id = registerEvent((data) => {
+        resolve(data)
+      }, (data) => {
+        reject(data)
+      })
+      ipcRenderer.send('load-contact-json', {id})
+    })
+  },
+  async saveToJson(context, payload){
+    console.log(1)
+    return new Promise((resolve, reject) => {
+      let id = registerEvent((data) => {
+        resolve(data)
+      }, (data) => {
+        reject(data)
+      })
+      ipcRenderer.send('save-contact-json', {id,data: payload})
     })
   }
 }
