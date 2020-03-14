@@ -151,7 +151,9 @@ export default {
           comment: this.markup,
           feeFrom: fees
         }).catch(e => {
-          this.$message.error('发送交易失败！请仔细核对交易是否确实未发起再重试！' + e)
+          console.log(e)
+          this.$message.error('发送交易失败！请仔细核对交易是否确实未发起再重试！' + JSON.stringify(e))
+          throw e
         })
         this.$alert("创建交易成功！交易id:" + transid)
       } catch (e) {

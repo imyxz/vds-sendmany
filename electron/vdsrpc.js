@@ -7,6 +7,6 @@ ipcMain.on('call-vds-rpc', async(event, {id, data}) => {
     let resp = await vdsrpc.callRpc(data)
     event.sender.send('call-vds-rpc-reply-success', {id, data: resp})
   }catch(e){
-    event.sender.send('call-vds-rpc-reply-error', {id, data: event})
+    event.sender.send('call-vds-rpc-reply-error', {id, data: e})
   }
 })
