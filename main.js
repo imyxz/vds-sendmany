@@ -30,7 +30,7 @@ const path = require('path')
 const app = electron.app
 const data = require('./electron/data')
 const vdsrpc = require('./electron/vdsrpc')
-
+const contractJson = require('./electron/contact-json')
 const newWin = () => {
 	win = new electron.BrowserWindow({
 		icon: path.join(__dirname, 'static/icon.png')

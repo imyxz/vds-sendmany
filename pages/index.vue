@@ -31,23 +31,19 @@
           v-for="(receiver,index) in receivers"
           :key="index"
         >
-          <template v-if="receiver.input">
-            <el-input
-              v-model="receiver.address"
-              placeholder="收款地址"
-            ></el-input>
-          </template>
-          <template v-else>
-            <el-input
-              value="`${receiver.name}(${receiver.address})`"
-              disabled
-            ></el-input>
-          </template>
+          <el-input
+            v-model="receiver.name"
+            placeholder="名称"
+          ></el-input>
+          <el-input
+            v-model="receiver.address"
+            placeholder="收款地址"
+          ></el-input>
           <el-input
             v-model="receiver.amount"
             placeholder="付款金额"
             type="number"
-						style="width: 300px;"
+            style="width: 300px;"
           ></el-input>
           <el-button
             @click="remove(index)"
@@ -58,6 +54,14 @@
           @click="add"
           type="primary"
         >增加</el-button>
+        <el-button
+          @click="load"
+          type="warning"
+        >读取</el-button>
+        <el-button
+          @click="save"
+          type="success"
+        >保存</el-button>
       </div>
     </div>
     <div class="row">
@@ -201,6 +205,26 @@ export default {
     async loadAddressesInfo() {
       let data = await this.$store.dispatch("vdsrpc/getAddressesInfo")
       this.addressInfo = data
+    },
+    async load(){
+      try{
+        let data = await this.$store.dispatch("contacts/loadFromJson")
+        data.forEach(e => e.amount = '')
+        this.receivers.push(...data)
+        this.$alert('读取成功')
+      }catch(e){
+        this.$alert('读取失败')
+      }
+      
+    },
+    async save(){
+      try{
+        await this.$store.dispatch("contacts/saveToJson", this.receivers)
+        this.$alert('保存成功')
+      }catch(e){
+        this.$alert('保存失败')
+      }
+      
     }
   },
   computed: {
