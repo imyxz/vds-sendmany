@@ -57,6 +57,21 @@ export const actions = {
   async getWalletInfo(){
     return callRpc('getwalletinfo')
   },
+  async listunspent(){
+    return callRpc('listunspent')
+  },
+  async createrawtransaction(context, {
+    transactions,
+    receivers
+  }){
+    return callRpc('createrawtransaction', transactions, receivers)
+  },
+  async signrawtransaction(context, trans){
+    return callRpc('signrawtransaction', trans)
+  },
+  async sendrawtransaction(context, trans){
+    return callRpc('sendrawtransaction', trans)
+  },
   async getAddressesInfo(){
     let data = await callRpc('listaddressgroupings')
     data = explainArray(data)

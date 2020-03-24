@@ -18,7 +18,7 @@ if (config.dev) {
 }
 // Listen the server
 server.listen()
-const _NUXT_URL_ = `http://localhost:${server.address().port}`
+const _NUXT_URL_ = `http://localhost:${server.address().port}/`
 console.log(`Nuxt working on ${_NUXT_URL_}`)
 
 /*

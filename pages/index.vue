@@ -1,6 +1,10 @@
 <template>
   <div class="container">
     <div class="info">
+      <h2>批量打币</h2>
+      <nuxt-link to="/many2one">前往币归集</nuxt-link>
+    </div>
+    <div class="info">
       钱包余额: {{walletInfo.balance}} (未确认: {{walletInfo.unconfirmed_balance}})
       <el-button @click="loadData">刷新</el-button>
     </div>
